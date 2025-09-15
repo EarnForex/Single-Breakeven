@@ -1,5 +1,5 @@
 #property link          "https://www.earnforex.com/metatrader-expert-advisors/single-breakeven/"
-#property version       "1.00"
+#property version       "1.01"
 #property strict
 #property copyright     "EarnForex.com - 2025"
 #property description   "This expert advisor will set a single breakeven level for multiple trades on the same symbol."
@@ -674,6 +674,7 @@ double CalculateSingleBreakeven()
 
     if (PositionsTotal == 0) return 0; // Nothing to calculate.
     
+    AccCurrency = AccountCurrency();
     double point_value_risk = CalculatePointValue(Symbol(), Risk);
 
     if (point_value_risk == 0) return 0; // No symbol information yet.

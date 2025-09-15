@@ -1,5 +1,5 @@
 #property link          "https://www.earnforex.com/metatrader-expert-advisors/single-breakeven/"
-#property version       "1.00"
+#property version       "1.01"
 
 #property copyright     "EarnForex.com - 2025"
 #property description   "This expert advisor will set a single breakeven level for multiple trades on the same symbol."
@@ -384,11 +384,13 @@ void DrawPanel()
              EnableDisabledBack,
              clrBlack);
     ObjectSetInteger(ChartID(), PanelEnableDisable, OBJPROP_CORNER, ChartCorner);
+    ChartRedraw();
 }
 
 void CleanPanel()
 {
     ObjectsDeleteAll(ChartID(), ExpertName + "-P-");
+    ChartRedraw();
 }
 
 void ChangeTrailingEnabled()
@@ -409,7 +411,6 @@ void ChangeTrailingEnabled()
     }
     else EnableTrailing = false;
     DrawPanel();
-    ChartRedraw();
 }
 
 enum mode_of_operation
@@ -641,6 +642,7 @@ double CalculateSingleBreakeven()
 
     if (PosTotal == 0) return 0; // Nothing to calculate.
     
+    AccCurrency = AccountInfoString(ACCOUNT_CURRENCY);
     double point_value_risk = CalculatePointValue(Risk);
 
     if (point_value_risk == 0) return 0; // No symbol information yet.
